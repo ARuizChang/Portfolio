@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
+import { sounds } from '../utils/sound'
 
 const Navbar = ({ darkMode, setDarkMode }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -27,6 +28,16 @@ const Navbar = ({ darkMode, setDarkMode }) => {
     setIsOpen(false)
   }
 
+  const handleClick = (sectionId) => {
+    sounds.softClick();
+    scrollToSection(sectionId);
+  }
+
+  const handleDarkModeToggle = () => {
+    sounds.buttonPop();
+    setDarkMode(!darkMode);
+  }
+
   return (
     <motion.nav 
       initial={{ y: -100 }}
@@ -43,14 +54,15 @@ const Navbar = ({ darkMode, setDarkMode }) => {
             {navLinks.map((link) => (
               <button
                 key={link.name}
-                onClick={() => scrollToSection(link.href)}
+                onClick={() => handleClick(link.href)}
+                onMouseEnter={() => sounds.linkHover()}
                 className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors duration-300"
               >
                 {link.name}
               </button>
             ))}
             <button
-              onClick={() => setDarkMode(!darkMode)}
+              onClick={handleDarkModeToggle}
               className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 dark:text-white"
             >
               {darkMode ? '🌞' : '🌙'}
@@ -60,7 +72,7 @@ const Navbar = ({ darkMode, setDarkMode }) => {
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center gap-4">
             <button
-              onClick={() => setDarkMode(!darkMode)}
+              onClick={handleDarkModeToggle}
               className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 dark:text-white"
             >
               {darkMode ? '🌞' : '🌙'}
@@ -99,7 +111,7 @@ const Navbar = ({ darkMode, setDarkMode }) => {
             {navLinks.map((link) => (
               <button
                 key={link.name}
-                onClick={() => scrollToSection(link.href)}
+                onClick={() => handleClick(link.href)}
                 className="block w-full text-left px-4 py-2 text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors duration-300"
               >
                 {link.name}

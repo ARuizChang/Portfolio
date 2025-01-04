@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { sounds } from '../utils/sound'
 
 const Contact = () => {
   const contactInfo = [
@@ -51,6 +52,8 @@ const Contact = () => {
             <motion.a
               href={info.href}
               key={info.type}
+              onClick={() => sounds.buttonPop()}
+              onMouseEnter={() => sounds.linkHover()}
               target={info.type === 'GitHub' ? '_blank' : undefined}
               rel={info.type === 'GitHub' ? 'noopener noreferrer' : undefined}
               initial={{ opacity: 0, y: 20 }}
@@ -79,9 +82,11 @@ const Contact = () => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
-          className="mt-12 text-center text-gray-600 dark:text-gray-300"
+          className="mt-12 text-center"
         >
-          <p className="text-lg">Let's work together! Feel free to reach out.</p>
+          <p className="text-lg text-gray-600 dark:text-gray-300">
+            Let's work together! Feel free to reach out.
+          </p>
         </motion.div>
       </div>
     </section>
