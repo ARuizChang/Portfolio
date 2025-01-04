@@ -1,8 +1,11 @@
+let isMuted = false;
+
 const playSound = (soundName) => {
+  if (isMuted) return;
+  
   const audio = new Audio(`/sounds/${soundName}.mp3`);
-  audio.volume = 0.2; // Adjust volume to 20%
+  audio.volume = 0.2;
   audio.play().catch(error => {
-    // Silently handle autoplay restrictions
     console.log('Sound play prevented:', error);
   });
 };
@@ -10,5 +13,10 @@ const playSound = (soundName) => {
 export const sounds = {
   softClick: () => playSound('soft-click'),
   buttonPop: () => playSound('button-pop'),
-  linkHover: () => playSound('link-hover')
+  linkHover: () => playSound('link-hover'),
+  toggleMute: () => {
+    isMuted = !isMuted;
+    return isMuted;
+  },
+  isMuted: () => isMuted
 }; 
